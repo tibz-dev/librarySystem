@@ -32,7 +32,15 @@ public class BooksController : ControllerBase
     [HttpPut("{id}/borrow")]
     public async Task<IActionResult> Borrow(Guid id)
     {
-        await _bookService.BorrowBookAsync(id);
-        return Ok(new { message = "Book borrowed successfully" });
+        try
+        {
+            await _bookService.BorrowBookAsync(id);
+            return Ok(new { message = "Book borrowed successfully" });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+       
     }
 }

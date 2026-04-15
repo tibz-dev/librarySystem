@@ -23,10 +23,13 @@ public class BookRepository : IBookRepository
     {
         var book = Books.FirstOrDefault(b => b.Id == id);
 
-        if (book != null)
-        {
-            book.IsBorrowed = true;
-        }
+        if (book == null)
+            throw new Exception("Book not found");
+
+        if (book.IsBorrowed)
+            throw new Exception("Book is already borrowed");
+
+        book.IsBorrowed = true;
 
         return Task.CompletedTask;
     }
