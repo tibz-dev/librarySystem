@@ -30,4 +30,9 @@ public class BookService
 
         await _bookRepository.AddAsync(book);
     }
+
+    public async Task BorrowBookAsync(Guid id)
+    {
+        await _bookRepository.BorrowBookAsync(id);
+    }
 }

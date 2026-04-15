@@ -28,4 +28,11 @@ public class BooksController : ControllerBase
         await _bookService.AddBookAsync(dto);
         return Ok(new { message = "Book added successfully" });
     }
+
+    [HttpPut("{id}/borrow")]
+    public async Task<IActionResult> Borrow(Guid id)
+    {
+        await _bookService.BorrowBookAsync(id);
+        return Ok(new { message = "Book borrowed successfully" });
+    }
 }
