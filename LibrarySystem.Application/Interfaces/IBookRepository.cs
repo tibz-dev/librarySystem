@@ -6,5 +6,5 @@ public interface IBookRepository
 {
     Task<List<Book>> GetAllAsync();
     Task AddAsync(Book book);
-    Task BorrowBooksAsync(Guid id);
+    Task BorrowBookAsync(Guid id);
 }
