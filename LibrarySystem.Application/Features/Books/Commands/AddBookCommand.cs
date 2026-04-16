@@ -1,4 +1,6 @@
 ﻿using MediatR;
 using LibrarySystem.Application.DTOs;
 
-public record AddBookCommand(CreateBookDto Dto) : IRequest;
+namespace LibrarySystem.Application.Features.Books.Commands;
+
+public record AddBookCommand(CreateBookDto Dto) : IRequest<Unit>;
