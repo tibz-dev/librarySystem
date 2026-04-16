@@ -1,32 +1,34 @@
 ﻿using LibrarySystem.Application.DTOs;
 using LibrarySystem.Application.Interfaces;
 using LibrarySystem.Domain.Entities;
+using AutoMapper;
 
 namespace LibrarySystem.Application.Services;
 
 public class BookService
 {
     private readonly IBookRepository _bookRepository;
+    private readonly IMapper _mapper;
 
-    public BookService(IBookRepository bookRepository)
+    public BookService(IBookRepository bookRepository, IMapper mapper)
     {
         _bookRepository = bookRepository;
+      
+        _mapper = mapper;
     }
 
-    public async Task<List<Book>> GetAllBooksAsync()
+    public async Task<List<BookResponseDto>> GetAllBooksAsync()
     {
-        return await _bookRepository.GetAllAsync();
+        var books = await _bookRepository.GetAllAsync();
+        return _mapper.Map<List<BookResponseDto>>(books);
     }
 
     public async Task AddBookAsync(CreateBookDto dto)
     {
-        var book = new Book
-        {
-            Id = Guid.NewGuid(),
-            Title = dto.Title,
-            Author = dto.Author,
-            IsBorrowed = false
-        };
+        var book = _mapper.Map<Book>(dto);
+
+        book.Id = Guid.NewGuid();
+        book.IsBorrowed = false;
 
         await _bookRepository.AddAsync(book);
     }
